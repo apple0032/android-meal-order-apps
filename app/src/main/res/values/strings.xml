@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Meal Ordering System</string>
+
+    <string name="title_home">Menu</string>
+    <string name="title_dashboard">All Meals</string>
+    <string name="title_notifications">Waiting</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_account">Cart</string>
+
+</resources>
