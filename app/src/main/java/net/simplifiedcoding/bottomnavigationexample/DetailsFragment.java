@@ -1,5 +1,6 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,13 @@ public class DetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        Intent intent = getActivity().getIntent();
+        int id = intent.getIntExtra("id", 0);
+        final String food_uid = Integer.toString(id);
+
+        Toast.makeText(getActivity(), "You picked the fucking"+food_uid, Toast.LENGTH_LONG).show();
 
         View view = inflater.inflate(R.layout.fragment_details, null);
         NumberPicker np = (NumberPicker) view.findViewById(R.id.np);
@@ -49,7 +57,7 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"Bookmarked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Bookmarked "+food_uid, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -59,7 +67,7 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"Added to cart!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"Added to cart "+food_uid, Toast.LENGTH_SHORT).show();
             }
         });
 

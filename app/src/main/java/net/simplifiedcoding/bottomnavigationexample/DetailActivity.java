@@ -29,11 +29,12 @@ public class DetailActivity extends AppCompatActivity implements BottomNavigatio
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
-        String food_uid = Integer.toString(id);
-
-        Toast.makeText(this, "You picked "+food_uid, Toast.LENGTH_LONG).show();
+        //This method had moved and handled in details fragment
+//        Intent intent = getIntent();
+//        int id = intent.getIntExtra("id", 0);
+//        String food_uid = Integer.toString(id);
+//
+//        Toast.makeText(this, "You picked "+food_uid, Toast.LENGTH_LONG).show();
     }
 
 
