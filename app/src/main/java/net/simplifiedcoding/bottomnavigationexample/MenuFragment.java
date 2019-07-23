@@ -1,7 +1,9 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +34,8 @@ import java.util.ArrayList;
 public class MenuFragment extends Fragment {
 
     Context context;
+    ListView myProgram;
+    ProgressDialog dialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,26 +48,11 @@ public class MenuFragment extends Fragment {
         title = title.toUpperCase();
         menutitle.setText("-"+title+"-");
 
-        ListView myProgram = (ListView) view.findViewById(R.id.menulist);
+        DownloadTask task = new DownloadTask();
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/category/"+title);
 
-        ArrayList<SubjectData> arrayList = new ArrayList<SubjectData>();
-        arrayList.add(new SubjectData(1,"Ham & Cheese Burger Set", "https://upload.cc/i1/2019/07/18/PE4aDg.png",40));
-        arrayList.add(new SubjectData(2,"Ham & Egg Burger Set", "https://upload.cc/i1/2019/07/18/RAgnr4.png",50));
-        arrayList.add(new SubjectData(3,"Tuna Tomato Burger Set", "https://upload.cc/i1/2019/07/18/zxywHc.png",55));
-        arrayList.add(new SubjectData(4,"Teriyaki Chicken Burger Set", "https://upload.cc/i1/2019/07/18/vqcirU.png",60));
-        arrayList.add(new SubjectData(5,"Fish Burger", "https://upload.cc/i1/2019/07/19/SeVNWo.png",45));
-        arrayList.add(new SubjectData(6,"Grilled Ham & Cheese Thick Toast", "https://upload.cc/i1/2019/07/19/UZ3nJl.png",45));
+        myProgram = (ListView) view.findViewById(R.id.menulist);
 
-
-        CustomAdapter customAdapter = new CustomAdapter(getActivity(), arrayList);
-        myProgram.setAdapter(customAdapter);
-
-//        myProgram.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(view.getContext(),"Hello " + (i), Toast.LENGTH_LONG).show();
-//            }
-//        });
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener() {
@@ -78,4 +74,82 @@ public class MenuFragment extends Fragment {
         return view;
     }
 
+    public class DownloadTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+
+                url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = urlConnection.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+                int data = reader.read();
+
+                while (data != -1) {
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+                }
+
+                return result;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                //Toast.makeText(getApplicationContext(),"Could not find weather :(",Toast.LENGTH_SHORT).show();
+
+                return null;
+            }
+        }
+
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(getActivity(),
+                    "Loading", "Loading...",true);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            dialog.dismiss();
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                String result = jsonObject.getString("result");
+
+                JSONArray arr = new JSONArray(result);
+
+                Log.i("Temp", arr.toString());
+
+                ArrayList<SubjectData> arrayList = new ArrayList<SubjectData>();
+                for (int i=0; i < arr.length(); i++) {
+                    JSONObject jsonPart = arr.getJSONObject(i);
+                    Integer mealId = jsonPart.getInt("id");
+                    String mealname = jsonPart.getString("name");
+                    String mealimg = jsonPart.getString("img");
+                    Integer mealprice = jsonPart.getInt("price");
+                    arrayList.add(new SubjectData(mealId,mealname, mealimg,mealprice));
+                }
+
+//                arrayList.add(new SubjectData(1,"Ham & Cheese Burger Set", "https://upload.cc/i1/2019/07/18/PE4aDg.png",40));
+//                arrayList.add(new SubjectData(2,"Ham & Egg Burger Set", "https://upload.cc/i1/2019/07/18/RAgnr4.png",50));
+//                arrayList.add(new SubjectData(3,"Tuna Tomato Burger Set", "https://upload.cc/i1/2019/07/18/zxywHc.png",55));
+//                arrayList.add(new SubjectData(4,"Teriyaki Chicken Burger Set", "https://upload.cc/i1/2019/07/18/vqcirU.png",60));
+//                arrayList.add(new SubjectData(5,"Fish Burger", "https://upload.cc/i1/2019/07/19/SeVNWo.png",45));
+//                arrayList.add(new SubjectData(6,"Grilled Ham & Cheese Thick Toast", "https://upload.cc/i1/2019/07/19/UZ3nJl.png",45));
+
+
+                CustomAdapter customAdapter = new CustomAdapter(getActivity(), arrayList);
+                myProgram.setAdapter(customAdapter);
+
+            } catch (Exception e) {
+
+
+            }
+
+        }
+    }
 }

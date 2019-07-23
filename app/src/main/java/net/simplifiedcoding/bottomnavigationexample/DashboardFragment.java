@@ -1,5 +1,8 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,8 +14,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -73,9 +86,11 @@ public class DashboardFragment extends Fragment {
 //        return view;
 //    }
 
+    ProgressDialog dialog;
     private GridView grid;
-    private String[] text = {"Breakfast", "Lunch","Dinner", "Drinks", "Soup","Dessert","Snack"};
-    private int[] imageId = {R.drawable.breakfast, R.drawable.lunch, R.drawable.dinner, R.drawable.drinks, R.drawable.soup, R.drawable.dessert, R.drawable.snack};
+    private String[] text;
+    private String[] imageId;
+    DashGrid adapter;
 
     @Nullable
     @Override
@@ -84,17 +99,101 @@ public class DashboardFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_dashboard, null);
 
-        CustomGrid adapter = new CustomGrid(getActivity(), text, imageId);
+        DownloadTask task = new DownloadTask();
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal");
+
         grid = (GridView) view.findViewById(R.id.grid);
-        grid.setAdapter(adapter);
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //[+position] +的功用是?
-                Toast.makeText(getActivity(), "你選取了" + text[+position], Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         return view;
+    }
+
+
+    public class DownloadTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+
+                url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = urlConnection.getInputStream();
+                InputStreamReader reader = new InputStreamReader(in);
+                int data = reader.read();
+
+                while (data != -1) {
+                    char current = (char) data;
+                    result += current;
+                    data = reader.read();
+                }
+
+                return result;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                //Toast.makeText(getApplicationContext(),"Could not find weather :(",Toast.LENGTH_SHORT).show();
+
+                return null;
+            }
+        }
+
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(getActivity(),
+                    "Loading", "Loading...",true);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                String result = jsonObject.getString("result");
+                JSONArray arr = new JSONArray(result);
+                Log.i("Temp", arr.toString());
+
+                Integer leg = arr.length();
+                Log.i("Length", leg.toString());
+
+                final String[] text = new String[leg];
+                final String[] imageId = new String[leg];
+                final Integer[] MealId = new Integer[leg];
+                for (int i=0; i < arr.length(); i++) {
+                    JSONObject jsonPart = arr.getJSONObject(i);
+                    String mealname = jsonPart.getString("name");
+                    String mealimg = jsonPart.getString("img");
+                    Integer meal_id = jsonPart.getInt("id");
+                    text[i] = mealname;
+                    imageId[i] = mealimg;
+                    MealId[i] = meal_id;
+                }
+
+                //final String[] text = {"Breakfast", "Lunch","Dinner", "Drinks", "Soup","Dessert","Snack"};
+                adapter = new DashGrid(getActivity(), text, imageId);
+                grid.setAdapter(adapter);
+                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //[+position] +的功用是?
+                        //Toast.makeText(getActivity(), "你選取了" + MealId[+position], Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(),DetailActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("id", MealId[+position]);
+                        getActivity().startActivity(intent);
+                    }
+                });
+
+                dialog.dismiss();
+
+            } catch (Exception e) {
+                //Error handle
+            }
+
+        }
     }
 }
