@@ -17,14 +17,14 @@
     <TextView
         android:id="@+id/grid_text"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:paddingLeft="5dp"
         android:paddingTop="15px"
         android:paddingRight="5dp"
         android:paddingBottom="15px"
         android:textColor="#000000"
-        android:textSize="5pt"
+        android:textSize="6pt"
         android:textStyle="bold"
-        app:fontFamily="casual"></TextView>
+        app:fontFamily="@font/adamina"></TextView>
 </LinearLayout>

@@ -75,7 +75,14 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"Added to cart "+food_uid, Toast.LENGTH_SHORT).show();
+                String total_price = totalprice.getText().toString();
+                //Toast.makeText(getActivity(),"Added to cart "+food_uid, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getActivity(),OrderActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("id", food_uid);
+                intent.putExtra("total", total_price);
+                getActivity().startActivity(intent);
             }
         });
 
