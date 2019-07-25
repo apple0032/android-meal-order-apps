@@ -48,7 +48,7 @@ public class DetailsFragment extends Fragment {
         final String food_uid = Integer.toString(id);
 
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/"+food_uid);
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/"+food_uid+"/1");
 
         //Toast.makeText(getActivity(), "You picked the fucking"+food_uid, Toast.LENGTH_LONG).show();
 
@@ -128,7 +128,24 @@ public class DetailsFragment extends Fragment {
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                final String singlepricevalue = jsonObject.getString("price");
+                String exist = jsonObject.getString("exist");
+
+                int ex_qty = 1;
+                String totalpricevalue;
+                String singlepricevalue = jsonObject.getString("price");
+                if(!exist.equals("null")){
+                    String exist_qty = jsonObject.getJSONObject("exist").getString("qty");
+                    ex_qty = Integer.parseInt(exist_qty);
+
+                    Integer exist_total = jsonObject.getJSONObject("exist").getInt("total_price");
+                    totalpricevalue = exist_total.toString();
+                } else {
+                    totalpricevalue = jsonObject.getString("price");
+                    singlepricevalue = totalpricevalue;
+                }
+
+                final String newsinglepricevalue = singlepricevalue;
+
                 String food_img = jsonObject.getString("img");
                 String food_name = jsonObject.getString("name");
 
@@ -136,7 +153,7 @@ public class DetailsFragment extends Fragment {
 
                 //Init value
                 singleprice.setText(singlepricevalue);
-                totalprice.setText(singlepricevalue);
+                totalprice.setText(totalpricevalue);
                 foodname.setText(food_name);
                 Picasso.with(context)
                         .load(food_img)
@@ -147,13 +164,15 @@ public class DetailsFragment extends Fragment {
                 //Specify the maximum value/number of NumberPicker
                 np.setMaxValue(10);
 
+                np.setValue(ex_qty);
+
                 //Gets whether the selector wheel wraps when reaching the min/max value.
                 np.setWrapSelectorWheel(true);
 
                 np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                     @Override
                     public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                        Integer total = newVal * Integer.parseInt(singlepricevalue);; //hardcoded temporary
+                        Integer total = newVal * Integer.parseInt(newsinglepricevalue);; //hardcoded temporary
                         String qty = Integer.toString(total);
                         //Toast.makeText(getActivity(),qty, Toast.LENGTH_LONG).show();
 

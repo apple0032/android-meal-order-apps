@@ -49,7 +49,7 @@ public class MenuFragment extends Fragment {
         menutitle.setText("-"+title+"-");
 
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/category/"+title);
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal-category/"+title);
 
         myProgram = (ListView) view.findViewById(R.id.menulist);
 
