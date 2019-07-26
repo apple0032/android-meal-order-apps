@@ -26,17 +26,24 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/foodbanner" />
 
+        <SearchView
+            android:id="@+id/searching"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="135dp"
+            android:background="#418FA5C4" />
+
         <GridView
             android:id="@+id/grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="185dp"
             android:columnWidth="100dp"
             android:gravity="center"
             android:horizontalSpacing="6dp"
             android:numColumns="auto_fit"
             android:paddingLeft="5dp"
-            android:paddingTop="140dp"
+            android:paddingTop="1dp"
             android:paddingRight="5dp"
             android:stretchMode="columnWidth"
             android:verticalSpacing="6dp" />

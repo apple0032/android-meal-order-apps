@@ -1,6 +1,7 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -86,7 +88,8 @@ public class DashboardFragment extends Fragment {
 //        return view;
 //    }
 
-    ProgressDialog dialog;
+    //ProgressDialog dialog;
+    DialogInterface dialog;
     private GridView grid;
     private String[] text;
     private String[] imageId;
@@ -98,6 +101,35 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_dashboard, null);
+
+
+
+        SearchView mSearchView = (SearchView) view.findViewById(R.id.searching);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Toast.makeText(getActivity(),query, Toast.LENGTH_LONG).show();
+                DownloadTask task_search = new DownloadTask();
+                task_search.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal?q="+query);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                DownloadTask task_fetch = new DownloadTask();
+                task_fetch.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal");
+                return false;
+            }
+        });
+
 
         DownloadTask task = new DownloadTask();
         task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal");
@@ -150,6 +182,7 @@ public class DashboardFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            dialog.dismiss();
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -187,8 +220,6 @@ public class DashboardFragment extends Fragment {
                         getActivity().startActivity(intent);
                     }
                 });
-
-                dialog.dismiss();
 
             } catch (Exception e) {
                 //Error handle
