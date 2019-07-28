@@ -30,6 +30,98 @@
             android:divider="#D6D0D0"
             android:dividerHeight="1dp"
             android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false" />
+            android:headerDividersEnabled="false"
+            android:paddingBottom="80dp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/checkoutbtn"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#81D12B2B"
+        android:text="Check Out"
+        android:textColor="#FFFFFF"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/totalqtylabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="55dp"
+        android:text="Total Qty - "
+        android:textSize="16sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/totalqty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="55dp"
+        android:text="-"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/totalpricelabel" />
+
+    <TextView
+        android:id="@+id/totalpricelabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="33dp"
+        android:text="Total Price - "
+        android:textSize="16sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/totalprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="33dp"
+        android:text="-"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/totalpricelabel" />
+
+    <Button
+        android:id="@+id/dateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="5dp"
+        android:background="#8D6199DA"
+        android:text="Pick Time"
+        android:textColor="#F0FCFAFA"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="-"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/totalpricelabel" />
 </android.support.constraint.ConstraintLayout>

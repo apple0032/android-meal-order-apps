@@ -1,6 +1,7 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,8 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -22,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Belal on 1/23/2018.
@@ -32,6 +37,11 @@ public class CartFragment extends Fragment {
     Context context;
     ProgressDialog dialog;
     ListView myCart;
+    Button checkOutBtn;
+    TextView tlprice;
+    TextView tlqty;
+    private Button dateButton;
+    private TextView dateText;
 
     @Nullable
     @Override
@@ -45,6 +55,37 @@ public class CartFragment extends Fragment {
         task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart/1");
 
         myCart = (ListView) view.findViewById(R.id.menulist);
+        checkOutBtn = (Button) view.findViewById(R.id.checkoutbtn);
+        tlprice = (TextView) view.findViewById(R.id.totalprice);
+        tlqty = (TextView) view.findViewById(R.id.totalqty);
+        dateText = (TextView)view.findViewById(R.id.dateText);
+        dateButton = (Button)view.findViewById(R.id.dateButton);
+
+        dateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                // Use the current time as the default values for the picker
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                // Create a new instance of TimePickerDialog and return it
+                new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener(){
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        dateText.setText(hourOfDay + ":" + minute);
+                    }
+                }, hour, minute, false).show();
+            }
+        });
+
+        checkOutBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Run create order API...",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return view;
     }
@@ -100,6 +141,10 @@ public class CartFragment extends Fragment {
                 Log.i("QQQQ", arr.toString());
 
                 Integer leg = arr.length();
+                //control checkout button
+                if(leg < 1) {
+                    checkOutBtn.setVisibility(View.GONE);
+                }
                 Log.i("Length", leg.toString());
 
                 ArrayList<CartData> arrayList = new ArrayList<CartData>();
@@ -113,10 +158,16 @@ public class CartFragment extends Fragment {
                     arrayList.add(new CartData(mealId,mealname, mealimg,mealprice,mealqty));
                 }
 
-                //Toast.makeText(getActivity(),"你有"+leg.toString()+"個Order, 但係未撚做完",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"你有"+leg.toString()+"個Order",Toast.LENGTH_SHORT).show();
 
                 CartAdapter customAdapter = new CartAdapter(getActivity(), arrayList);
                 myCart.setAdapter(customAdapter);
+
+                String totalprice = jsonObject.getString("total");
+                tlprice.setText("$ "+totalprice);
+
+                String totalqty = jsonObject.getString("qty");
+                tlqty.setText(totalqty);
 
             } catch (Exception e) {
 
