@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private GridView grid;
-    private String[] text = {"Breakfast", "Lunch","Dinner", "Drinks", "Soup","Dessert","Snack"};
-    private int[] imageId = {R.drawable.breakfast, R.drawable.lunch, R.drawable.dinner, R.drawable.drinks, R.drawable.soup, R.drawable.dessert, R.drawable.snack};
+    private String[] text = {"Breakfast", "Lunch", "Tea", "Dinner", "Drinks", "Soup","Dessert","Snack"};
+    private int[] imageId = {R.drawable.breakfast, R.drawable.lunch, R.drawable.tea, R.drawable.dinner, R.drawable.drinks, R.drawable.soup, R.drawable.dessert, R.drawable.snack};
 
     @Nullable
     @Override

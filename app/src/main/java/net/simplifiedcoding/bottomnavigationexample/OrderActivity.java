@@ -11,16 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.NumberPicker;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -49,15 +43,15 @@ public class OrderActivity extends AppCompatActivity implements BottomNavigation
                 "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
                 "user_id=1&meal_id="+food_uid+"&total="+total_price);
 
-
-
+        
         //loading the default fragment
-        loadFragment(new CartSuccessFragment());
+        //loadFragment(new CartSuccessFragment());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
+        navigation.setSelectedItemId(R.id.navigation_cart);
     }
 
 
@@ -79,11 +73,11 @@ public class OrderActivity extends AppCompatActivity implements BottomNavigation
                 break;
 
             case R.id.navigation_profile:
-                fragment = new ProfileFragment();
+                fragment = new CartFragment();
                 break;
 
-            case R.id.navigation_account:
-                fragment = new ProfileFragment();
+            case R.id.navigation_cart:
+                fragment = new CartFragment();
                 break;
         }
 

@@ -1,5 +1,7 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,27 +11,41 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class CartActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        try
-//        {
-//            this.getSupportActionBar().hide();
-//        }
-//        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_main);
 
         //loading the default fragment
-        loadFragment(new HomeFragment());
+        loadFragment(new CartFragment());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+        Intent intent = this.getIntent();
+        int id = intent.getIntExtra("id", 0);
+        String uid = Integer.toString(id);
+
+        DownloadTask downloadInfoOfWeather = new DownloadTask();
+
+        downloadInfoOfWeather.execute(
+                "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
+                "user_id=1&meal_id="+uid);
+        //Toast.makeText(this, "You picked "+uid, Toast.LENGTH_LONG).show();
     }
 
 
@@ -96,6 +112,55 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
             default:
                 return false;
+        }
+    }
+
+    public class DownloadTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+            String result = "";
+
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.addRequestProperty("User-Agent", USER_AGENT);
+                connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                connection.setDoOutput(true);
+                DataOutputStream write = new DataOutputStream(connection.getOutputStream());
+
+                write.writeBytes(params[1]);
+                write.flush();
+                write.close();
+
+                // Response: 400
+                Log.e("Response", connection.getResponseCode() + "");
+
+            } catch (Exception e) {
+                Log.e(e.toString(), "Something with request");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+
+
+            } catch (Exception e) {
+
+
+            }
+
         }
     }
 }

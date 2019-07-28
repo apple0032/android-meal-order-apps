@@ -1,6 +1,5 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class DetailActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -56,11 +54,11 @@ public class DetailActivity extends AppCompatActivity implements BottomNavigatio
                 break;
 
             case R.id.navigation_profile:
-                fragment = new ProfileFragment();
+                fragment = new CartFragment();
                 break;
 
-            case R.id.navigation_account:
-                fragment = new ProfileFragment();
+            case R.id.navigation_cart:
+                fragment = new CartFragment();
                 break;
         }
 

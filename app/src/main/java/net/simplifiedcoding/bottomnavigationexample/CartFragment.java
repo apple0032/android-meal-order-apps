@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,22 +27,24 @@ import java.util.ArrayList;
  * Created by Belal on 1/23/2018.
  */
 
-public class ProfileFragment extends Fragment {
+public class CartFragment extends Fragment {
 
     Context context;
     ProgressDialog dialog;
+    ListView myCart;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile, null);
+        View view = inflater.inflate(R.layout.fragment_cart, null);
 
         //Toast.makeText(getActivity(),"xxxx",Toast.LENGTH_SHORT).show();
 
         DownloadTask task = new DownloadTask();
         task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart/1");
 
+        myCart = (ListView) view.findViewById(R.id.menulist);
 
         return view;
     }
@@ -99,19 +102,21 @@ public class ProfileFragment extends Fragment {
                 Integer leg = arr.length();
                 Log.i("Length", leg.toString());
 
-//                final String[] text = new String[leg];
-//                final String[] imageId = new String[leg];
-//                final Integer[] MealId = new Integer[leg];
-//                for (int i=0; i < arr.length(); i++) {
-//                    JSONObject jsonPart = arr.getJSONObject(i);
-//                    String mealname = jsonPart.getString("name");
-//                    String mealimg = jsonPart.getString("img");
-//                    Integer meal_id = jsonPart.getInt("id");
-//                    text[i] = mealname;
-//                    imageId[i] = mealimg;
-//                    MealId[i] = meal_id;
-//                }
-                Toast.makeText(getActivity(),"你有"+leg.toString()+"個Order, 但係未撚做完",Toast.LENGTH_SHORT).show();
+                ArrayList<CartData> arrayList = new ArrayList<CartData>();
+                for (int i=0; i < arr.length(); i++) {
+                    JSONObject jsonPart = arr.getJSONObject(i);
+                    Integer mealId = jsonPart.getInt("id");
+                    String mealname = jsonPart.getString("name");
+                    String mealimg = jsonPart.getString("img");
+                    Integer mealprice = jsonPart.getInt("total_price");
+                    Integer mealqty = jsonPart.getInt("qty");
+                    arrayList.add(new CartData(mealId,mealname, mealimg,mealprice,mealqty));
+                }
+
+                //Toast.makeText(getActivity(),"你有"+leg.toString()+"個Order, 但係未撚做完",Toast.LENGTH_SHORT).show();
+
+                CartAdapter customAdapter = new CartAdapter(getActivity(), arrayList);
+                myCart.setAdapter(customAdapter);
 
             } catch (Exception e) {
 
