@@ -19,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
-public class OrderActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class WaitingActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
@@ -28,30 +28,16 @@ public class OrderActivity extends AppCompatActivity implements BottomNavigation
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = this.getIntent();
-        String food_uid = intent.getStringExtra("id");
-        String total_price = intent.getStringExtra("total");
-        Log.i("MEALID",food_uid);
-
-        //Toast.makeText(this,"Added to cart. Total price was $ "+total_price, Toast.LENGTH_SHORT).show();
-
-        //Call create cart API here....
-        DownloadTask postOfCart = new DownloadTask();
-
-
-        postOfCart.execute(
-                "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
-                "user_id=1&meal_id="+food_uid+"&total="+total_price);
-
-        
         //loading the default fragment
-        //loadFragment(new CartSuccessFragment());
+        loadFragment(new NotificationsFragment());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        navigation.setSelectedItemId(R.id.navigation_cart);
+        navigation.setSelectedItemId(R.id.navigation_notifications);
+
+        //Toast.makeText(this, "You picked "+uid, Toast.LENGTH_LONG).show();
     }
 
 
@@ -121,52 +107,5 @@ public class OrderActivity extends AppCompatActivity implements BottomNavigation
         }
     }
 
-    public class DownloadTask extends AsyncTask<String,Void,String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-
-            final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
-            String result = "";
-
-            try {
-                URL url = new URL(params[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                connection.setRequestMethod("POST");
-                connection.addRequestProperty("User-Agent", USER_AGENT);
-                connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-                connection.setDoOutput(true);
-                DataOutputStream write = new DataOutputStream(connection.getOutputStream());
-
-                write.writeBytes(params[1]);
-                write.flush();
-                write.close();
-
-                // Response: 400
-                Log.e("Response", connection.getResponseCode() + "");
-
-            } catch (Exception e) {
-                Log.e(e.toString(), "Something with request");
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-
-
-            } catch (Exception e) {
-
-
-            }
-
-        }
-    }
 }

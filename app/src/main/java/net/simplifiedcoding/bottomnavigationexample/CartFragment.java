@@ -3,6 +3,7 @@ package net.simplifiedcoding.bottomnavigationexample;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -82,7 +84,23 @@ public class CartFragment extends Fragment {
         checkOutBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Run create order API...",Toast.LENGTH_SHORT).show();
+                String picktime = dateText.getText().toString();
+                if(!picktime.equals("-")) {
+
+                    //Execute create order API
+                    PostTask startPurchase = new PostTask();
+                    startPurchase.execute(
+                            "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase",
+                            "user_id=1&waiting="+picktime);
+
+                    //Intent to waiting page to display order..
+                    Intent intent = new Intent(getActivity(),WaitingActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getActivity().startActivity(intent);
+
+                } else {
+                    Toast.makeText(getActivity(), "Please select a time.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -168,6 +186,56 @@ public class CartFragment extends Fragment {
 
                 String totalqty = jsonObject.getString("qty");
                 tlqty.setText(totalqty);
+
+            } catch (Exception e) {
+
+
+            }
+
+        }
+    }
+
+
+    public class PostTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+            String result = "";
+
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.addRequestProperty("User-Agent", USER_AGENT);
+                connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                connection.setDoOutput(true);
+                DataOutputStream write = new DataOutputStream(connection.getOutputStream());
+
+                write.writeBytes(params[1]);
+                write.flush();
+                write.close();
+
+                // Response: 400
+                Log.e("Response", connection.getResponseCode() + "");
+
+            } catch (Exception e) {
+                Log.e(e.toString(), "Something with request");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+
 
             } catch (Exception e) {
 
