@@ -67,7 +67,7 @@ public class CartActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_profile:
-                fragment = new CartFragment();
+                fragment = new UserFragment();
                 break;
 
             case R.id.navigation_cart:

@@ -82,10 +82,15 @@ public class NotificationsFragment extends Fragment {
             }
         }
 
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(getActivity(),
+                    "Loading", "Loading...",true);
+        }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            dialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String result = jsonObject.getString("result");

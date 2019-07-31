@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:verticalSpacing="2dp"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/userid_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UserID-"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#D3E46565"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/username_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username-"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#D3E46565"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/logoutbtn"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:text="Logout" />
+</LinearLayout>

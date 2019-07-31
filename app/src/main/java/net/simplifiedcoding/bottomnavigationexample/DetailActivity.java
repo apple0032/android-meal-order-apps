@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity implements BottomNavigatio
                 break;
 
             case R.id.navigation_profile:
-                fragment = new CartFragment();
+                fragment = new UserFragment();
                 break;
 
             case R.id.navigation_cart:

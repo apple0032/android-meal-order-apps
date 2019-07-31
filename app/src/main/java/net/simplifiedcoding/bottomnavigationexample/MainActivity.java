@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+
     }
 
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_profile:
-                fragment = new CartFragment();
+                fragment = new UserFragment();
                 break;
 
             case R.id.navigation_cart:
