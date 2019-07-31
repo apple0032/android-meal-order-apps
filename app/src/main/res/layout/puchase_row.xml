@@ -1,22 +1,21 @@
 <?xml version = "1.0" encoding = "utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/r1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools = "http://schemas.android.com/tools" android:layout_width = "match_parent"
+    android:layout_height = "match_parent">
 
 
     <ImageView
         android:id="@+id/list_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/waiting" />
+        app:srcCompat="@drawable/bf1" />
 
     <TextView
         android:id="@+id/title"
@@ -28,7 +27,7 @@
         android:gravity="center"
         android:text="TextView"
         android:textColor="#040404"
-        android:textSize="15dip"
+        android:textSize="12dip"
         android:textStyle="bold"
         android:typeface="sans"
         app:fontFamily="sans-serif-condensed-light"
@@ -41,11 +40,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="34dp"
         android:layout_marginBottom="8dp"
         android:text="$ 100"
         android:textColor="#4A72EC"
-        android:textSize="18sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:fontFamily="serif"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,8 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
-        android:text="Items :"
+        android:layout_marginTop="10dp"
+        android:text="Quantity :"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/list_image"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -70,10 +70,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="34dp"
         android:text="2"
         android:textColor="#4A72EC"
-        android:textSize="18sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:fontFamily="serif"
         app:layout_constraintEnd_toStartOf="@+id/itemprice"
@@ -87,19 +87,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="35dp"
         android:text="Total :"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/quantity"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="#A34685C4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_image" />
 
 </android.support.constraint.ConstraintLayout>

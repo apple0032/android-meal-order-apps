@@ -3,36 +3,23 @@ package net.simplifiedcoding.bottomnavigationexample;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-class WaitAdapter implements ListAdapter {
-    ArrayList<WaitData> arrayList;
+class PurchaseAdapter implements ListAdapter {
+    ArrayList<CartData> arrayList;
     Context context;
-    //ListView myPurchase;
-    //ImageView img;
-
-    public WaitAdapter(Context context, ArrayList<WaitData> arrayList) {
+    public PurchaseAdapter(Context context, ArrayList<CartData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
@@ -68,36 +55,34 @@ class WaitAdapter implements ListAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final WaitData WaitData = arrayList.get(position);
-
-
+        final CartData CartData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.wait_row, null);
+            convertView = layoutInflater.inflate(R.layout.puchase_row, null);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    //Toast.makeText(view.getContext(),"Clicked "+WaitData.Id, Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(context,PurchaseDetailsActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    intent.putExtra("id", WaitData.Id);
-                    context.startActivity(intent);
+                public void onClick(View v) {
+                    //Toast.makeText(v.getContext(),"Hello " + (CartData.Id), Toast.LENGTH_LONG).show();
                 }
             });
 
-            //myPurchase = convertView.findViewById(R.id.plist);
-            //img = convertView.findViewById(R.id.imageView4);
 
             TextView title = convertView.findViewById(R.id.title);
-            title.setText(WaitData.Date);
-
-            TextView qty = convertView.findViewById(R.id.quantity);
-            qty.setText(Integer.toString(WaitData.Qty));
+            ImageView image = convertView.findViewById(R.id.list_image);
+            title.setText(CartData.SubjectName);
 
             TextView price = convertView.findViewById(R.id.itemprice);
-            price.setText("$ "+Integer.toString(WaitData.Total));
+            String intprice = Integer.toString(CartData.Price);
+            price.setText("$ "+intprice);
 
+
+            TextView qty = convertView.findViewById(R.id.quantity);
+            String intqty = Integer.toString(CartData.Qty);
+            qty.setText(intqty);
+
+            Picasso.with(context)
+                    .load(CartData.Image)
+                    .into(image);
         }
         return convertView;
     }
@@ -113,5 +98,4 @@ class WaitAdapter implements ListAdapter {
     public boolean isEmpty() {
         return false;
     }
-
 }

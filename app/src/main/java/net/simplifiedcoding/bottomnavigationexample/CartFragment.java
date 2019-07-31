@@ -135,7 +135,6 @@ public class CartFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
 
-                //Toast.makeText(getApplicationContext(),"Could not find weather :(",Toast.LENGTH_SHORT).show();
 
                 return null;
             }

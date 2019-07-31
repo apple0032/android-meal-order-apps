@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools" android:layout_width = "match_parent"
+    android:layout_height = "match_parent">
+
+    <ImageView
+        android:id="@+id/qrcode"
+        android:layout_width="97dp"
+        android:layout_height="92dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/total_item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="65dp"
+        android:text="Total Items -"
+        android:textSize="16sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+    <TextView
+        android:id="@+id/total_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="165dp"
+        android:layout_marginBottom="65dp"
+        android:text=" - "
+        android:textColor="#4A72EC"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/total_qty_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="40dp"
+        android:text="Total Quantity -"
+        android:textSize="16sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/total_qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="165dp"
+        android:layout_marginBottom="40dp"
+        android:text=" - "
+        android:textColor="#4A72EC"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/total_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="15dp"
+        android:text="Total Price -"
+        android:textSize="16sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="165dp"
+        android:layout_marginBottom="15dp"
+        android:text=" - "
+        android:textColor="#4A72EC"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/armata"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/pid_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:text="ID-"
+        android:textSize="10sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:textSize="10sp"
+        app:fontFamily="@font/armata"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/menutitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:background="#16CF7154"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="-"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:fontFamily="sans-serif-condensed" />
+
+        <ListView
+            android:id="@+id/menulist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#D6D0D0"
+            android:dividerHeight="1dp"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:paddingBottom="100dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

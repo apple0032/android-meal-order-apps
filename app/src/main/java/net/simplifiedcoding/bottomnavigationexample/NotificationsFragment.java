@@ -77,7 +77,6 @@ public class NotificationsFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
 
-                //Toast.makeText(getApplicationContext(),"Could not find weather :(",Toast.LENGTH_SHORT).show();
 
                 return null;
             }
@@ -99,7 +98,7 @@ public class NotificationsFragment extends Fragment {
                     JSONObject jsonPart = arr.getJSONObject(i);
                     Integer pid = jsonPart.getInt("purchaseID");
                     Integer total_price = jsonPart.getInt("total_price");
-                    Integer total_items = jsonPart.getInt("total_items");
+                    Integer total_items = jsonPart.getInt("total_meal");
                     String datetime = jsonPart.getString("datetime");
                     String status = jsonPart.getString("status");
                     arrayList.add(new WaitData(datetime,status, total_price,total_items, pid));
