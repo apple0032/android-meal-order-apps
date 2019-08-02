@@ -87,7 +87,7 @@ public class UserFragment extends Fragment {
                 public void onClick(View v) {
                     Toast.makeText(getActivity(),"You had been logged out!",Toast.LENGTH_SHORT).show();
                     getActivity().getSharedPreferences("login_data", 0).edit().clear().commit();
-                    Intent intent = new Intent(getActivity(),MainActivity.class)
+                    Intent intent = new Intent(getActivity(),UserActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                 }
@@ -165,7 +165,7 @@ public class UserFragment extends Fragment {
                         }
                     });
 
-                    Intent intent = new Intent(getActivity(),MainActivity.class)
+                    Intent intent = new Intent(getActivity(),UserActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                 }

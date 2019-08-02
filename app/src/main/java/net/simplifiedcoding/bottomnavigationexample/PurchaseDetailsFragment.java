@@ -204,7 +204,8 @@ public class PurchaseDetailsFragment extends Fragment {
                             public void run() {
                                 try {
                                     Picasso.with(context)
-                                            .load("http://phpqrcode.sourceforge.net/qrsample.php?data=ThePurchaseIDIs"+purchaseID+"&ecc=H&matrix=15")
+                                            //.load("http://phpqrcode.sourceforge.net/qrsample.php?data=ThePurchaseIDIs"+purchaseID+"&ecc=H&matrix=15")
+                                            .load("https://www.patrick-wied.at/static/qrgen/qrgen.php?r=12&a=0&content=http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/checkout/"+purchaseID)
                                             .into(qrCode);
 
                                 } catch (Exception e) {
