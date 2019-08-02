@@ -38,6 +38,23 @@
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
+        <!--  Name Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#DCFFFFFF">
+
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textPassword"
+                android:textColor="#FFFFFF"/>
+        </android.support.design.widget.TextInputLayout>
+
         <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -55,27 +72,27 @@
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:text="Login"
-            android:background="#993B5998"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp"/>
-
         <Button
             android:id="@+id/registerbtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:background="#993B5998"
             android:padding="12dp"
             android:text="register"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="24dp"
+            android:background="#DDCA395B"
+            android:padding="12dp"
+            android:text="Back to login"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
