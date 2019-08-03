@@ -43,6 +43,7 @@ public class CartFragment extends Fragment {
     TextView tlprice;
     TextView tlqty;
     Integer userid;
+    ImageButton deleteAllBtn;
     private Button dateButton;
     private TextView dateText;
 
@@ -72,6 +73,7 @@ public class CartFragment extends Fragment {
         tlqty = (TextView) view.findViewById(R.id.totalqty);
         dateText = (TextView)view.findViewById(R.id.dateText);
         dateButton = (Button)view.findViewById(R.id.dateButton);
+        deleteAllBtn = (ImageButton) view.findViewById(R.id.deleteall);
 
         dateButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -111,6 +113,25 @@ public class CartFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Please select a time.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        deleteAllBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                    //Execute create order API
+                    PostTask startPurchase = new PostTask();
+                    startPurchase.execute(
+                            "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/delete-all",
+                            "user_id="+userid);
+
+                    //Intent to waiting page to display order..
+                    Intent intent = new Intent(getActivity(),CartActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    getActivity().startActivity(intent);
+
             }
         });
 
