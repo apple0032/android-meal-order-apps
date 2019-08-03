@@ -40,11 +40,14 @@ public class CartActivity extends AppCompatActivity implements BottomNavigationV
         int id = intent.getIntExtra("id", 0);
         String uid = Integer.toString(id);
 
+        Integer userid = this.getSharedPreferences("login_data", MODE_PRIVATE)
+                .getInt("userid", 0);
+
         DownloadTask downloadInfoOfWeather = new DownloadTask();
 
         downloadInfoOfWeather.execute(
-                "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
-                "user_id=1&meal_id="+uid);
+                "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/delete",
+                "user_id="+userid+"&meal_id="+uid);
         //Toast.makeText(this, "You picked "+uid, Toast.LENGTH_LONG).show();
     }
 

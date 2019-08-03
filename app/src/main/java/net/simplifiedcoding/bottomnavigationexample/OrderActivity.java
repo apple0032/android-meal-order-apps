@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -33,19 +34,26 @@ public class OrderActivity extends AppCompatActivity implements BottomNavigation
         String total_price = intent.getStringExtra("total");
         Log.i("MEALID",food_uid);
 
-        //Toast.makeText(this,"Added to cart. Total price was $ "+total_price, Toast.LENGTH_SHORT).show();
 
-        //Call create cart API here....
-        DownloadTask postOfCart = new DownloadTask();
+        //Get user id from sharePreferences
+        Integer userid = this.getSharedPreferences("login_data", MODE_PRIVATE)
+                .getInt("userid", 0);
+        if(userid == 0){
+            //Go to login page
+            Toast.makeText(this,"Please login or register first.",Toast.LENGTH_SHORT).show();
+            Intent intent2 = new Intent(this, UserActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent2);
+        } else {
 
+            //Call create cart API here....
+            DownloadTask postOfCart = new DownloadTask();
 
-        postOfCart.execute(
-                "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
-                "user_id=1&meal_id="+food_uid+"&total="+total_price);
-
+            postOfCart.execute(
+                    "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart",
+                    "user_id="+userid+"&meal_id=" + food_uid + "&total=" + total_price);
+        }
         
-        //loading the default fragment
-        //loadFragment(new CartSuccessFragment());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);

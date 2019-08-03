@@ -71,8 +71,11 @@ public class PurchaseDetailsFragment extends Fragment {
         pID = (TextView) view.findViewById(R.id.pid);
         qrCode = view.findViewById(R.id.qrcode);
 
+        Integer userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
+                .getInt("userid", 0);
+
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase/1?q="+uid);
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase/"+userid+"?q="+uid);
 
 
         final Handler handler = new Handler();

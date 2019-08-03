@@ -47,8 +47,12 @@ public class DetailsFragment extends Fragment {
         int id = intent.getIntExtra("id", 0);
         final String food_uid = Integer.toString(id);
 
+        //Get user id from sharePreferences
+        Integer userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
+                .getInt("userid", 0);
+
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/"+food_uid+"/1");
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/meal/"+food_uid+"/"+userid);
 
         //Toast.makeText(getActivity(), "You picked the fucking"+food_uid, Toast.LENGTH_LONG).show();
 

@@ -2,6 +2,7 @@ package net.simplifiedcoding.bottomnavigationexample;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,8 +43,19 @@ public class NotificationsFragment extends Fragment {
         //Toast.makeText(getActivity(), "This is waiting list...", Toast.LENGTH_SHORT).show();
         View view = inflater.inflate(R.layout.fragment_notifications, null);
 
+        //Get user id from sharePreferences
+        Integer userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
+                .getInt("userid", 0);
+        if(userid == 0){
+            //Go to login page
+            Toast.makeText(getActivity(),"Please login or register first.",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), UserActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase/1");
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase/"+userid);
 
         myProgram = (ListView) view.findViewById(R.id.menulist);
 

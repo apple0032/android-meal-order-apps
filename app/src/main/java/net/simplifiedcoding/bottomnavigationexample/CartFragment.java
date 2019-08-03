@@ -42,6 +42,7 @@ public class CartFragment extends Fragment {
     Button checkOutBtn;
     TextView tlprice;
     TextView tlqty;
+    Integer userid;
     private Button dateButton;
     private TextView dateText;
 
@@ -51,10 +52,19 @@ public class CartFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_cart, null);
 
-        //Toast.makeText(getActivity(),"xxxx",Toast.LENGTH_SHORT).show();
+        //Get user id from sharePreferences
+        userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
+                .getInt("userid", 0);
+        if(userid == 0){
+            //Go to login page
+            Toast.makeText(getActivity(),"Please login or register first.",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), UserActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
 
         DownloadTask task = new DownloadTask();
-        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart/1");
+        task.execute("http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/cart/"+userid);
 
         myCart = (ListView) view.findViewById(R.id.menulist);
         checkOutBtn = (Button) view.findViewById(R.id.checkoutbtn);
@@ -91,7 +101,7 @@ public class CartFragment extends Fragment {
                     PostTask startPurchase = new PostTask();
                     startPurchase.execute(
                             "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/purchase",
-                            "user_id=1&waiting="+picktime);
+                            "user_id="+userid+"&waiting="+picktime);
 
                     //Intent to waiting page to display order..
                     Intent intent = new Intent(getActivity(),WaitingActivity.class)
