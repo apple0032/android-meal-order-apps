@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class DetailsFragment extends Fragment {
     TextView singleprice;
     ImageView foodimg;
     TextView foodname;
+    ElegantNumberButton numberButton;
 
     @Nullable
     @Override
@@ -57,7 +59,7 @@ public class DetailsFragment extends Fragment {
         //Toast.makeText(getActivity(), "You picked the fucking"+food_uid, Toast.LENGTH_LONG).show();
 
         View view = inflater.inflate(R.layout.fragment_details, null);
-        np = (NumberPicker) view.findViewById(R.id.np);
+        numberButton = (ElegantNumberButton) view.findViewById(R.id.number_button);
         totalprice = (TextView) view.findViewById(R.id.totalprice);
         singleprice = (TextView) view.findViewById(R.id.singleprice);
         foodname = (TextView) view.findViewById(R.id.foodname);
@@ -162,22 +164,14 @@ public class DetailsFragment extends Fragment {
                         .load(food_img)
                         .into(foodimg);
 
-                //Set the minimum value of NumberPicker
-                np.setMinValue(1);
-                //Specify the maximum value/number of NumberPicker
-                np.setMaxValue(10);
 
-                np.setValue(ex_qty);
-
-                //Gets whether the selector wheel wraps when reaching the min/max value.
-                np.setWrapSelectorWheel(true);
-
-                np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                numberButton.setNumber(Integer.toString(ex_qty));
+                //String qty = numberButton.getNumber();
+                numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
                     @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal){
-                        Integer total = newVal * Integer.parseInt(newsinglepricevalue);; //hardcoded temporary
+                    public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                        Integer total = newValue * Integer.parseInt(newsinglepricevalue);
                         String qty = Integer.toString(total);
-                        //Toast.makeText(getActivity(),qty, Toast.LENGTH_LONG).show();
 
                         totalprice.setText(qty);
                     }

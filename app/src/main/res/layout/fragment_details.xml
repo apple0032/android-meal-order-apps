@@ -1,180 +1,186 @@
-<?xml version = "1.0" encoding = "utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/foodname"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:fontFamily="casual"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodname" />
-
-    <NumberPicker
-        android:id="@+id/np"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="216dp"
-        android:layout_marginLeft="216dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/singlepricelabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="244dp"
-        android:text="Single price -"
-        android:textColor="#242020"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:fontFamily="@font/armata"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodname" />
-
-    <TextView
-        android:id="@+id/totalpricelabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Total price -"
-        android:textColor="#242020"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:fontFamily="@font/armata"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/singlepricelabel" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="61dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="QTY"
-        android:textColor="#EE1919"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/singleprice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="48dp"
-        android:textColor="#EE1919"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/armata"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/totalprice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="12dp"
-        android:textColor="#EE1919"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/armata"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/singleprice" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="48dp"
-        android:text="$"
-        android:textColor="#EE1919"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/singlepricelabel"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="84dp"
-        android:text="$"
-        android:textColor="#EE1919"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/totalpricelabel"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <Button
-        android:id="@+id/bookmark"
-        android:layout_width="250dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:background="#B5E72929"
-        android:text="Add to favourite"
-        android:textColor="#FCFCFC"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalpricelabel" />
-
-    <Button
-        android:id="@+id/addCart"
-        android:layout_width="250dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#B5E72929"
-        android:text="Add to cart"
-        android:textColor="#FCFCFC"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookmark" />
-
-    <TextView
-        android:id="@+id/foodId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tag="null"
-        android:text="TextView"
-        android:visibility="invisible"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="565dp" />
+        <TextView
+            android:id="@+id/foodname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7CE6BB70"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:fontFamily="casual"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/foodname" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:background="#F5F5F5"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/singlepricelabel"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Single price -"
+                android:textColor="#242020"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:fontFamily="@font/armata" />
+
+            <TextView
+                android:id="@+id/singleprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="#EE1919"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/armata" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#F5F5F5"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+
+            <TextView
+                android:id="@+id/totalpricelabel"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Total price -"
+                android:textColor="#242020"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:fontFamily="@font/armata" />
+
+            <TextView
+                android:id="@+id/totalprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="#EE1919"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/armata" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#F5F5F5"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+            <TextView
+                android:id="@+id/qtylabel"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Quantity -"
+                android:textColor="#242020"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:fontFamily="@font/armata" />
+
+            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                android:id="@+id/number_button"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="38dp"
+                android:gravity="center"
+                app:backGroundColor="@color/colorPrimary"
+                app:finalNumber="10"
+                app:initialNumber="1"
+                app:textSize="6sp">
+
+            </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <Button
+                android:id="@+id/bookmark"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="#B5295FE7"
+                android:text="Add to favourite"
+                android:textColor="#FCFCFC" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <Button
+                android:id="@+id/addCart"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="#B5E72929"
+                android:text="Add to cart"
+                android:textColor="#FCFCFC" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
