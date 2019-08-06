@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
             android:background="#F5F5F5"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -148,7 +151,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:orientation="horizontal"
             android:paddingLeft="35dp"
             android:paddingRight="35dp">
@@ -159,8 +161,26 @@
                 android:layout_height="43dp"
                 android:background="#B5295FE7"
                 android:text="Add to favourite"
-                android:textColor="#FCFCFC" />
+                android:textColor="#FCFCFC"
+                android:visibility="invisible" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+            <Button
+                android:id="@+id/unbookmark"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:background="#B5E79B29"
+                android:text="Favourite"
+                android:textColor="#FCFCFC"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout

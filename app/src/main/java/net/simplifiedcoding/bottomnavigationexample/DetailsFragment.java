@@ -1,5 +1,6 @@
 package net.simplifiedcoding.bottomnavigationexample;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -32,6 +34,7 @@ import java.net.URL;
 
 public class DetailsFragment extends Fragment {
 
+    ProgressDialog dialog;
     Context context;
     NumberPicker np;
     TextView totalprice;
@@ -39,6 +42,9 @@ public class DetailsFragment extends Fragment {
     ImageView foodimg;
     TextView foodname;
     ElegantNumberButton numberButton;
+    Integer userid;
+    Button bookmark;
+    Button unbookmark;
 
     @Nullable
     @Override
@@ -50,7 +56,7 @@ public class DetailsFragment extends Fragment {
         final String food_uid = Integer.toString(id);
 
         //Get user id from sharePreferences
-        Integer userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
+        userid = getActivity().getSharedPreferences("login_data", getActivity().MODE_PRIVATE)
                 .getInt("userid", 0);
 
         DownloadTask task = new DownloadTask();
@@ -65,15 +71,42 @@ public class DetailsFragment extends Fragment {
         foodname = (TextView) view.findViewById(R.id.foodname);
         foodimg = (ImageView) view.findViewById(R.id.imageView2);
 
-        Button button = (Button) view.findViewById(R.id.bookmark);
-        button.setOnClickListener(new View.OnClickListener()
+        bookmark = (Button) view.findViewById(R.id.bookmark);
+        bookmark.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getActivity(),"Bookmarked "+food_uid, Toast.LENGTH_SHORT).show();
+                PostTask addFav = new PostTask();
+
+                addFav.execute(
+                        "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/fav",
+                        "user_id=" + userid + "&meal_id=" + food_uid);
+
+                //Toast.makeText(getActivity(),"Bookmarked "+food_uid, Toast.LENGTH_SHORT).show();
+                bookmark.setVisibility(View.GONE);
+                unbookmark.setVisibility(View.VISIBLE);
             }
         });
+
+        unbookmark = (Button) view.findViewById(R.id.unbookmark);
+        unbookmark.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PostTask removeFav = new PostTask();
+
+                removeFav.execute(
+                        "http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/fav-rm",
+                        "user_id=" + userid + "&meal_id=" + food_uid);
+
+                //Toast.makeText(getActivity(),"Bookmarked "+food_uid, Toast.LENGTH_SHORT).show();
+                bookmark.setVisibility(View.VISIBLE);
+                unbookmark.setVisibility(View.GONE);
+            }
+        });
+
 
         Button button2 = (Button) view.findViewById(R.id.addCart);
         button2.setOnClickListener(new View.OnClickListener()
@@ -127,6 +160,11 @@ public class DetailsFragment extends Fragment {
             }
         }
 
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(getActivity(),
+                    "Loading", "Loading...",true);
+        }
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -153,6 +191,7 @@ public class DetailsFragment extends Fragment {
 
                 String food_img = jsonObject.getString("img");
                 String food_name = jsonObject.getString("name");
+                String fav = jsonObject.getString("fav");
 
                 Log.i("Temp", jsonObject.toString());
 
@@ -176,6 +215,66 @@ public class DetailsFragment extends Fragment {
                         totalprice.setText(qty);
                     }
                 });
+
+                Log.i("FAVFAVFAV", fav);
+                if(fav.equals("true")){
+                    bookmark.setVisibility(View.GONE);
+                    unbookmark.setVisibility(View.VISIBLE);
+                } else {
+                    bookmark.setVisibility(View.VISIBLE);
+                    unbookmark.setVisibility(View.GONE);
+                }
+
+
+            } catch (Exception e) {
+
+
+            }
+
+            dialog.dismiss();
+        }
+    }
+
+    public class PostTask extends AsyncTask<String,Void,String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+            String result = "";
+
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("POST");
+                connection.addRequestProperty("User-Agent", USER_AGENT);
+                connection.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+                connection.setDoOutput(true);
+                DataOutputStream write = new DataOutputStream(connection.getOutputStream());
+
+                write.writeBytes(params[1]);
+                write.flush();
+                write.close();
+
+                // Response: 400
+                Log.e("Response", connection.getResponseCode() + "");
+
+            } catch (Exception e) {
+                Log.e(e.toString(), "Something with request");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+
 
             } catch (Exception e) {
 
