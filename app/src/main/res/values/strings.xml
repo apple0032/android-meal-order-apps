@@ -7,5 +7,6 @@
     <string name="title_notifications">Waiting</string>
     <string name="title_profile">Profile</string>
     <string name="title_account">Cart</string>
+    <string name="title_activity_success">SuccessActivity</string>
 
 </resources>

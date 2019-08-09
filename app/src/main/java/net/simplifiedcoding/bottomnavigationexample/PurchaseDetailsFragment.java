@@ -3,19 +3,26 @@ package net.simplifiedcoding.bottomnavigationexample;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +54,13 @@ public class PurchaseDetailsFragment extends Fragment {
     TextView pTlPrice;
     TextView pID;
     ImageView qrCode;
+    ImageView bigQr;
     Integer counter = 0;
     Timer timer;
+    Button qrBtn;
+    PopupWindow popupWindow;
+    ConstraintLayout cons;
+    Button closePopupBtn;
 
     @Nullable
     @Override
@@ -104,6 +116,9 @@ public class PurchaseDetailsFragment extends Fragment {
             }
         };
         timer.schedule(doAsynchronousTask, 0, 5000);
+
+        qrBtn = (Button) view.findViewById(R.id.qrbtn);
+        cons = (ConstraintLayout) view.findViewById(R.id.cons);
 
         return view;
     }
@@ -198,6 +213,7 @@ public class PurchaseDetailsFragment extends Fragment {
 
 
                 //Generate QR Code
+                final String QRurl = "https://www.patrick-wied.at/static/qrgen/qrgen.php?r=12&a=0&content=http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/checkout/"+purchaseID;
                 final Handler handler = new Handler();
                 Timer timer = new Timer();
                 TimerTask doAsynchronousTask = new TimerTask() {
@@ -208,7 +224,7 @@ public class PurchaseDetailsFragment extends Fragment {
                                 try {
                                     Picasso.with(context)
                                             //.load("http://phpqrcode.sourceforge.net/qrsample.php?data=ThePurchaseIDIs"+purchaseID+"&ecc=H&matrix=15")
-                                            .load("https://www.patrick-wied.at/static/qrgen/qrgen.php?r=12&a=0&content=http://ec2-18-216-196-249.us-east-2.compute.amazonaws.com/meal-order-api/checkout/"+purchaseID)
+                                            .load(QRurl)
                                             .into(qrCode);
 
                                 } catch (Exception e) {
@@ -218,6 +234,38 @@ public class PurchaseDetailsFragment extends Fragment {
                     }
                 };
                 timer.schedule(doAsynchronousTask, 0, 3000);
+
+
+                qrBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(getActivity(), ".......", Toast.LENGTH_LONG).show();
+                        //instantiate the popup.xml layout file
+                        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View customView = layoutInflater.inflate(R.layout.popup,null);
+                        closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+                        bigQr = (ImageView) customView.findViewById(R.id.bigQR);
+
+                        //instantiate popup window
+                        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                        //display the popup window
+                        popupWindow.showAtLocation(cons, Gravity.CENTER, 0, 0);
+
+                        Picasso.with(context)
+                                .load(QRurl)
+                                .into(bigQr);
+
+                        //close the popup window on button click
+                        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popupWindow.dismiss();
+                            }
+                        });
+                    }
+                });
+
 
             } catch (Exception e) {
 
@@ -270,9 +318,14 @@ public class PurchaseDetailsFragment extends Fragment {
 
                 if(result.equals("done")){
                     timer.cancel();
+
+                    SharedPreferences pref = getActivity().getSharedPreferences("purchase", getActivity().MODE_PRIVATE);
+                    pref.edit()
+                            .putInt("ps", 1)
+                            .commit();
+
                     Toast.makeText(getActivity(), "Successful Purchase!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getActivity(),MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                 }
 

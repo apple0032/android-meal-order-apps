@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -24,8 +25,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        catch (NullPointerException e){}
         setContentView(R.layout.activity_main);
 
+        Integer ps = this.getSharedPreferences("purchase", this.MODE_PRIVATE)
+                .getInt("ps", 0);
+
+
         //loading the default fragment
-        loadFragment(new HomeFragment());
+
+        if(ps == 0) {
+            loadFragment(new HomeFragment());
+        } else {
+            loadFragment(new SuccessFragment());
+        }
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);

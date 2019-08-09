@@ -3,14 +3,27 @@
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools" android:layout_width = "match_parent"
-    android:layout_height = "match_parent">
+    android:layout_height = "match_parent"
+    android:id="@+id/cons">
 
     <ImageView
         android:id="@+id/qrcode"
-        android:layout_width="97dp"
-        android:layout_height="92dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="113dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/qrbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginRight="12dp"
         android:layout_marginBottom="5dp"
+        android:background="#C32C5ABB"
+        android:text="QR CODE"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="parent" />
 
@@ -143,7 +156,7 @@
             android:dividerHeight="1dp"
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
-            android:paddingBottom="100dp" />
+            android:paddingBottom="130dp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

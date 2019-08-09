@@ -40,6 +40,8 @@ public class NotificationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        getActivity().getSharedPreferences("purchase", 0).edit().clear().commit();
+
         //Toast.makeText(getActivity(), "This is waiting list...", Toast.LENGTH_SHORT).show();
         View view = inflater.inflate(R.layout.fragment_notifications, null);
 

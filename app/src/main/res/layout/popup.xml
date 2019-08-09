@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E9E9E9"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10px">
+
+    <ImageView
+        android:id="@+id/bigQR"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/google" />
+
+    <Button
+        android:id="@+id/closePopupBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="#DDCA395B"
+        android:text="Close"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp" />
+
+</LinearLayout>
