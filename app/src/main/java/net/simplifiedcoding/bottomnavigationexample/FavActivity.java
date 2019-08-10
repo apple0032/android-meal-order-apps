@@ -89,14 +89,17 @@ public class FavActivity extends AppCompatActivity implements BottomNavigationVi
         switch (item.getItemId()) {
             case R.id.cart:
 
-                Intent intent = new Intent(this, UserActivity.class)
+                Intent intent = new Intent(this, FavActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
 
-                Log.i("Item Selected","Cart!");
                 return true;
             case R.id.help:
-                Log.i("Item Selected","Help");
+
+                Intent intent2 = new Intent(this, InfoActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent2);
+
                 return true;
             default:
                 return false;
