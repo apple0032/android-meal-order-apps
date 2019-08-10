@@ -10,38 +10,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class FavActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        try
-//        {
-//            this.getSupportActionBar().hide();
-//        }
-//        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_main);
 
-        Integer ps = this.getSharedPreferences("purchase", this.MODE_PRIVATE)
-                .getInt("ps", 0);
 
+        loadFragment(new FavFragment());
 
-        //loading the default fragment
-
-        if(ps == 0) {
-            loadFragment(new HomeFragment());
-        } else {
-            loadFragment(new SuccessFragment());
-        }
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-
 
     }
 
@@ -103,17 +89,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.cart:
 
-                Intent intent = new Intent(this, FavActivity.class)
+                Intent intent = new Intent(this, UserActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
 
+                Log.i("Item Selected","Cart!");
                 return true;
             case R.id.help:
-
-                Intent intent2 = new Intent(this, InfoActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent2);
-
+                Log.i("Item Selected","Help");
                 return true;
             default:
                 return false;
