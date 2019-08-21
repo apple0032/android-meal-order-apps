@@ -98,6 +98,11 @@ class WaitAdapter implements ListAdapter {
             TextView price = convertView.findViewById(R.id.itemprice);
             price.setText("$ "+Integer.toString(WaitData.Total));
 
+            if(WaitData.Status.equals("deliver")) {
+                ImageView listimage = convertView.findViewById(R.id.list_image);
+                listimage.setImageResource(R.drawable.success2);
+            }
+
         }
         return convertView;
     }
