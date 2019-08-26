@@ -103,6 +103,11 @@ class WaitAdapter implements ListAdapter {
                 listimage.setImageResource(R.drawable.success2);
             }
 
+            if(WaitData.Status.equals("done")) {
+                ImageView listimage = convertView.findViewById(R.id.list_image);
+                listimage.setImageResource(R.drawable.finish);
+            }
+
         }
         return convertView;
     }

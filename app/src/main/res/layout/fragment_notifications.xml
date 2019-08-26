@@ -20,8 +20,8 @@
             android:paddingTop="10dp"
             android:text="Purchase List"
             android:textColor="#000000"
-            android:textSize="25sp"
-            app:fontFamily="casual" />
+            android:textSize="23sp"
+            app:fontFamily="@font/biorhyme" />
 
         <ListView
             android:id="@+id/menulist"

@@ -2,8 +2,14 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/adamina</item>
+        <item>@font/alegreya_sc</item>
+        <item>@font/allerta_stencil</item>
+        <item>@font/amiko</item>
+        <item>@font/andada</item>
         <item>@font/anonymous_pro</item>
         <item>@font/armata</item>
+        <item>@font/biorhyme</item>
         <item>@font/biorhyme_light</item>
+        <item>@font/chivo</item>
     </array>
 </resources>
